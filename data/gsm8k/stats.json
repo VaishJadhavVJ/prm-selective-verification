@@ -1,0 +1,6 @@
+{
+  "train_size": 7473,
+  "test_size": 1319,
+  "avg_steps_train": 3.575538605646996,
+  "avg_steps_test": 3.6535253980288096
+}

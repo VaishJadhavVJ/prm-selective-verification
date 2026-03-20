@@ -1,9 +1,6 @@
 __pycache__/
 *.pyc
 .env
-data/raw/
-data/gsm8k/
-data/options/
 models/
 results/
 *.pt
