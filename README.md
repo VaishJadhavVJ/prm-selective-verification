@@ -39,7 +39,3 @@ prm-project/
 ```bash
 pip install datasets yfinance pandas numpy scipy
 ```
-
-## Team
-- [Student 1] — Data collection, dataset construction
-- [Student 2] — Model pipeline, PRM implementation
