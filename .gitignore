@@ -2,9 +2,7 @@ __pycache__/
 *.pyc
 .env
 models/
-results/
 *.pt
 *.bin
 .DS_Store
 .ipynb_checkpoints/
-.gitignore
