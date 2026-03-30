@@ -25,7 +25,7 @@ def main():
     with open("data/gsm8k/test.json") as f:
         all_problems = json.load(f)
     
-    problems = all_problems[:5]
+    problems = all_problems[:10]
     results = []
 
     for i, problem in enumerate(problems):
