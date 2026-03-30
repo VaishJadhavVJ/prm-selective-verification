@@ -5,7 +5,7 @@ Pulls stock prices, options chains, and computes key metrics.
 
 import json
 import os
-from datetime import datetime, timedelta
+from datetime import datetime
 import math
 
 

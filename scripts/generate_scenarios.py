@@ -6,9 +6,7 @@ and step-level correctness labels for PRM verification.
 
 import json
 import os
-import math
 import random
-from datetime import datetime
 
 
 def load_raw_data(raw_dir="data/raw"):
@@ -339,7 +337,6 @@ def generate_all_scenarios(raw_data, output_dir="data/options"):
     os.makedirs(output_dir, exist_ok=True)
 
     all_scenarios = []
-    scenario_id = 0
 
     for ticker_data in raw_data:
         stock = ticker_data["stock"]
@@ -375,19 +372,17 @@ def generate_all_scenarios(raw_data, output_dir="data/options"):
 
         for opt in selected_calls:
             scenario = generate_basic_call_scenario(stock, opt)
-            scenario["id"] = f"options_{scenario_id:04d}"
+            scenario["id"] = f"options_{len(all_scenarios):04d}"
             scenario["domain"] = "options_trading"
             scenario["ticker"] = stock["ticker"]
             all_scenarios.append(scenario)
-            scenario_id += 1
 
         for opt in selected_puts:
             scenario = generate_basic_put_scenario(stock, opt)
-            scenario["id"] = f"options_{scenario_id:04d}"
+            scenario["id"] = f"options_{len(all_scenarios):04d}"
             scenario["domain"] = "options_trading"
             scenario["ticker"] = stock["ticker"]
             all_scenarios.append(scenario)
-            scenario_id += 1
 
     # Save all scenarios
     output_path = os.path.join(output_dir, "scenarios.json")

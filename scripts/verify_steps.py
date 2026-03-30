@@ -8,7 +8,6 @@ This is the core of the project.
 """
 
 import json
-import math
 import random
 import time
 from typing import List, Dict, Optional

@@ -5,7 +5,6 @@ GSM8K contains grade-school math problems with step-by-step solutions.
 
 import json
 import os
-import re
 
 def download_gsm8k():
     """Download GSM8K from HuggingFace datasets."""
