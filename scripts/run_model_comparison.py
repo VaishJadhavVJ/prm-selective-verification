@@ -20,6 +20,11 @@ MODELS = {
         "name": "google/gemma-3-4b-it",
         "size": "4B",
         "family": "Google"
+    },
+    "qwen-3b": {
+        "name": "Qwen/Qwen2.5-3B-Instruct",
+        "size": "3B",
+        "family": "Alibaba"
     }
 }
 
@@ -40,11 +45,11 @@ def load_model(model_key):
 
     # Use float16 for efficiency on Apple Silicon
     model = AutoModelForCausalLM.from_pretrained(
-        info["name"],
-        torch_dtype=torch.float16,
-        device_map="auto",
-        trust_remote_code=True
-    )
+    info["name"],
+    torch_dtype=torch.bfloat16,
+    device_map="auto",
+    trust_remote_code=True
+)
 
     print(f"{model_key} loaded successfully!")
     return model, tokenizer
@@ -76,9 +81,8 @@ def run_problems(model, tokenizer, problems, model_key):
         with torch.no_grad():
             output = model.generate(
                 **inputs,
-                max_new_tokens=512,
-                temperature=0.7,
-                do_sample=True
+                max_new_tokens=256,
+                do_sample=False
             )
 
         inference_time = time.time() - start_time
