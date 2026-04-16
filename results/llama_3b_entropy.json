@@ -1,0 +1,567 @@
+[
+  {
+    "id": "gsm8k_test_0",
+    "question": "Janet\u2019s ducks lay 16 eggs per day. She eats three for breakfast every morning and bakes muffins for her friends every day with four. She sells the remainder at the farmers' market daily for $2 per fresh duck egg. How much in dollars does she make every day at the farmers' market?",
+    "expected_answer": "18",
+    "model_answer": "26",
+    "is_correct": false,
+    "inference_time": 162.88682985305786,
+    "generated_text": "To find out how much Janet makes at the farmers' market, we need to follow these steps:\n\n1. Calculate the total number of eggs laid per day: \nJanet's ducks lay 16 eggs per day.\n\n2. Calculate the number of eggs eaten for breakfast:\nJanet eats 3 eggs for breakfast every morning. \nTotal eggs eaten per day = 3\n\n3. Calculate the number of eggs left for baking and selling:\nEggs left for baking and selling = Total eggs laid - Total eggs eaten\nEggs left for baking and selling = 16 - 3\nEggs left for baking and selling = 13\n\n4. Calculate the number of eggs sold at the farmers' market:\nJanet sells the remainder at the farmers' market daily for $2 per fresh duck egg.\nEggs sold per day = Eggs left for baking and selling\nEggs sold per day = 13\n\n5. Calculate the total amount of money made at the farmers' market:\nJanet sells each egg for $2.\nTotal money made per day = Eggs sold per day * Price per egg\nTotal money made per day = 13 * 2\nTotal money made per day = 26\n\nTherefore, Janet makes $26 every day at the farmers' market.",
+    "mean_entropy": 0.40554394311192876,
+    "total_entropy": 107.46914492466112,
+    "num_tokens_generated": 265,
+    "steps": [
+      {
+        "step_num": 1,
+        "text": "To find out how much Janet makes at the farmers' market, we need to follow these steps:",
+        "entropy": {
+          "mean": 0.3229084750650641,
+          "max": 1.2899402379989624,
+          "min": 0.0001731295051285997,
+          "num_tokens": 11
+        },
+        "token_range": [
+          0,
+          11
+        ]
+      },
+      {
+        "step_num": 2,
+        "text": "Calculate the total number of eggs laid per day: \nJanet's ducks lay 16 eggs per day.",
+        "entropy": {
+          "mean": 0.5972641778511161,
+          "max": 2.0357534885406494,
+          "min": 2.0608795239240862e-06,
+          "num_tokens": 24
+        },
+        "token_range": [
+          11,
+          35
+        ]
+      },
+      {
+        "step_num": 3,
+        "text": "Calculate the number of eggs eaten for breakfast:\nJanet eats 3 eggs for breakfast every morning. \nTotal eggs eaten per day = 3",
+        "entropy": {
+          "mean": 0.4819624444276087,
+          "max": 2.3846001625061035,
+          "min": 0.00010282827133778483,
+          "num_tokens": 32
+        },
+        "token_range": [
+          35,
+          67
+        ]
+      },
+      {
+        "step_num": 4,
+        "text": "Calculate the number of eggs left for baking and selling:\nEggs left for baking and selling = Total eggs laid - Total eggs eaten\nEggs left for baking and selling = 16 - 3\nEggs left for baking and selli",
+        "entropy": {
+          "mean": 0.3745455212567432,
+          "max": 2.5149879455566406,
+          "min": 2.8763979571522214e-06,
+          "num_tokens": 198
+        },
+        "token_range": [
+          67,
+          265
+        ]
+      },
+      {
+        "step_num": 5,
+        "text": "Calculate the number of eggs sold at the farmers' market:\nJanet sells the remainder at the farmers' market daily for $2 per fresh duck egg.\nEggs sold per day = Eggs left for baking and selling\nEggs so",
+        "entropy": {
+          "mean": 0.0,
+          "max": 0.0,
+          "min": 0.0,
+          "num_tokens": 0
+        },
+        "token_range": [
+          265,
+          265
+        ]
+      },
+      {
+        "step_num": 6,
+        "text": "Calculate the total amount of money made at the farmers' market:\nJanet sells each egg for $2.\nTotal money made per day = Eggs sold per day * Price per egg\nTotal money made per day = 13 * 2\nTotal money",
+        "entropy": {
+          "mean": 0.0,
+          "max": 0.0,
+          "min": 0.0,
+          "num_tokens": 0
+        },
+        "token_range": [
+          265,
+          265
+        ]
+      }
+    ],
+    "num_steps": 6
+  },
+  {
+    "id": "gsm8k_test_1",
+    "question": "A robe takes 2 bolts of blue fiber and half that much white fiber.  How many bolts in total does it take?",
+    "expected_answer": "3",
+    "model_answer": "3",
+    "is_correct": true,
+    "inference_time": 72.82668113708496,
+    "generated_text": "To solve this problem, we need to follow the given information step by step.\n\nStep 1: The robe takes 2 bolts of blue fiber.\n\nStep 2: The robe takes half as much white fiber as blue fiber. Since it takes 2 bolts of blue fiber, we need to divide 2 by 2 to find out how many bolts of white fiber it takes.\n\n2 \u00f7 2 = 1\n\nSo, the robe takes 1 bolt of white fiber.\n\nStep 3: To find the total number of bolts, we need to add the number of bolts of blue fiber and white fiber.\n\n2 (blue) + 1 (white) = 3\n\nTherefore, it takes 3 bolts in total to make the robe.",
+    "mean_entropy": 0.41994563828956855,
+    "total_entropy": 64.67162829659355,
+    "num_tokens_generated": 154,
+    "steps": [
+      {
+        "step_num": 1,
+        "text": "To solve this problem, we need to follow the given information step by step.",
+        "entropy": {
+          "mean": 0.6678041608205864,
+          "max": 1.4566731452941895,
+          "min": 0.011044975370168686,
+          "num_tokens": 7
+        },
+        "token_range": [
+          0,
+          7
+        ]
+      },
+      {
+        "step_num": 2,
+        "text": "Step 1: The robe takes 2 bolts of blue fiber.",
+        "entropy": {
+          "mean": 0.9114616462584877,
+          "max": 3.1474099159240723,
+          "min": 5.970448910375126e-06,
+          "num_tokens": 16
+        },
+        "token_range": [
+          7,
+          23
+        ]
+      },
+      {
+        "step_num": 3,
+        "text": "Step 2: The robe takes half as much white fiber as blue fiber. Since it takes 2 bolts of blue fiber, we need to divide 2 by 2 to find out how many bolts of white fiber it takes.",
+        "entropy": {
+          "mean": 0.4705128313743949,
+          "max": 2.6964054107666016,
+          "min": 7.248143811011687e-05,
+          "num_tokens": 45
+        },
+        "token_range": [
+          23,
+          68
+        ]
+      },
+      {
+        "step_num": 4,
+        "text": "2 \u00f7 2 = 1",
+        "entropy": {
+          "mean": 0.2818666909170451,
+          "max": 1.8535162210464478,
+          "min": 3.909394763468299e-06,
+          "num_tokens": 86
+        },
+        "token_range": [
+          68,
+          154
+        ]
+      },
+      {
+        "step_num": 5,
+        "text": "So, the robe takes 1 bolt of white fiber.",
+        "entropy": {
+          "mean": 0.0,
+          "max": 0.0,
+          "min": 0.0,
+          "num_tokens": 0
+        },
+        "token_range": [
+          154,
+          154
+        ]
+      },
+      {
+        "step_num": 6,
+        "text": "Step 3: To find the total number of bolts, we need to add the number of bolts of blue fiber and white fiber.",
+        "entropy": {
+          "mean": 0.0,
+          "max": 0.0,
+          "min": 0.0,
+          "num_tokens": 0
+        },
+        "token_range": [
+          154,
+          154
+        ]
+      },
+      {
+        "step_num": 7,
+        "text": "2 (blue) + 1 (white) = 3",
+        "entropy": {
+          "mean": 0.0,
+          "max": 0.0,
+          "min": 0.0,
+          "num_tokens": 0
+        },
+        "token_range": [
+          154,
+          154
+        ]
+      },
+      {
+        "step_num": 8,
+        "text": "Therefore, it takes 3 bolts in total to make the robe.",
+        "entropy": {
+          "mean": 0.0,
+          "max": 0.0,
+          "min": 0.0,
+          "num_tokens": 0
+        },
+        "token_range": [
+          154,
+          154
+        ]
+      }
+    ],
+    "num_steps": 8
+  },
+  {
+    "id": "gsm8k_test_2",
+    "question": "Josh decides to try flipping a house.  He buys a house for $80,000 and then puts in $50,000 in repairs.  This increased the value of the house by 150%.  How much profit did he make?",
+    "expected_answer": "70000",
+    "model_answer": "150000.",
+    "is_correct": false,
+    "inference_time": 131.1477301120758,
+    "generated_text": "To find the profit Josh made, we need to calculate the new value of the house after the repairs and then subtract the cost of the repairs from it.\n\nStep 1: Calculate the new value of the house after the repairs.\n\nThe original price of the house was $80,000.\nThe repairs increased the value by 150%. To find the new value, we need to calculate 150% of the original price and add it to the original price.\n\n150% of $80,000 = 1.5 x $80,000 = $120,000\n\nNew value of the house = Original price + Increase in value\n= $80,000 + $120,000\n= $200,000\n\nStep 2: Calculate the profit made by Josh.\n\nThe cost of the repairs was $50,000.\nThe new value of the house is $200,000.\n\nProfit = New value - Cost of repairs\n= $200,000 - $50,000\n= $150,000\n\nTherefore, Josh made a profit of $150,000.",
+    "mean_entropy": 0.39055653284088715,
+    "total_entropy": 85.1413241593134,
+    "num_tokens_generated": 218,
+    "steps": [
+      {
+        "step_num": 1,
+        "text": "To find the profit Josh made, we need to calculate the new value of the house after the repairs and then subtract the cost of the repairs from it.",
+        "entropy": {
+          "mean": 0.6376242277001232,
+          "max": 2.843503952026367,
+          "min": 4.535838797892211e-06,
+          "num_tokens": 22
+        },
+        "token_range": [
+          0,
+          22
+        ]
+      },
+      {
+        "step_num": 2,
+        "text": "Step 1: Calculate the new value of the house after the repairs.",
+        "entropy": {
+          "mean": 0.6745827238164864,
+          "max": 2.26938533782959,
+          "min": 1.3003862022742396e-06,
+          "num_tokens": 61
+        },
+        "token_range": [
+          22,
+          83
+        ]
+      },
+      {
+        "step_num": 3,
+        "text": "The original price of the house was $80,000.\nThe repairs increased the value by 150%. To find the new value, we need to calculate 150% of the original price and add it to the original price.",
+        "entropy": {
+          "mean": 0.2219558888674446,
+          "max": 1.9105322360992432,
+          "min": 2.3117122509574983e-06,
+          "num_tokens": 135
+        },
+        "token_range": [
+          83,
+          218
+        ]
+      },
+      {
+        "step_num": 4,
+        "text": "150% of $80,000 = 1.5 x $80,000 = $120,000",
+        "entropy": {
+          "mean": 0.0,
+          "max": 0.0,
+          "min": 0.0,
+          "num_tokens": 0
+        },
+        "token_range": [
+          218,
+          218
+        ]
+      },
+      {
+        "step_num": 5,
+        "text": "New value of the house = Original price + Increase in value\n= $80,000 + $120,000\n= $200,000",
+        "entropy": {
+          "mean": 0.0,
+          "max": 0.0,
+          "min": 0.0,
+          "num_tokens": 0
+        },
+        "token_range": [
+          218,
+          218
+        ]
+      },
+      {
+        "step_num": 6,
+        "text": "Step 2: Calculate the profit made by Josh.",
+        "entropy": {
+          "mean": 0.0,
+          "max": 0.0,
+          "min": 0.0,
+          "num_tokens": 0
+        },
+        "token_range": [
+          218,
+          218
+        ]
+      },
+      {
+        "step_num": 7,
+        "text": "The cost of the repairs was $50,000.\nThe new value of the house is $200,000.",
+        "entropy": {
+          "mean": 0.0,
+          "max": 0.0,
+          "min": 0.0,
+          "num_tokens": 0
+        },
+        "token_range": [
+          218,
+          218
+        ]
+      },
+      {
+        "step_num": 8,
+        "text": "Profit = New value - Cost of repairs\n= $200,000 - $50,000\n= $150,000",
+        "entropy": {
+          "mean": 0.0,
+          "max": 0.0,
+          "min": 0.0,
+          "num_tokens": 0
+        },
+        "token_range": [
+          218,
+          218
+        ]
+      },
+      {
+        "step_num": 9,
+        "text": "Therefore, Josh made a profit of $150,000.",
+        "entropy": {
+          "mean": 0.0,
+          "max": 0.0,
+          "min": 0.0,
+          "num_tokens": 0
+        },
+        "token_range": [
+          218,
+          218
+        ]
+      }
+    ],
+    "num_steps": 9
+  },
+  {
+    "id": "gsm8k_test_3",
+    "question": "James decides to run 3 sprints 3 times a week.  He runs 60 meters each sprint.  How many total meters does he run a week?",
+    "expected_answer": "540",
+    "model_answer": "540",
+    "is_correct": true,
+    "inference_time": 97.45598793029785,
+    "generated_text": "To find the total number of meters James runs per week, we need to follow these steps:\n\nStep 1: Find the total number of sprints per week\nJames runs 3 sprints per day, 3 times a week. To find the total number of sprints per week, we multiply the number of sprints per day by the number of days per week:\n3 sprints/day * 3 days/week = 9 sprints/week\n\nStep 2: Find the total distance per sprint\nJames runs 60 meters per sprint.\n\nStep 3: Find the total distance per week\nTo find the total distance per week, we multiply the total number of sprints per week by the distance per sprint:\n9 sprints/week * 60 meters/sprint = 540 meters/week\n\nTherefore, James runs a total of 540 meters per week.",
+    "mean_entropy": 0.26883385180899305,
+    "total_entropy": 48.39009332561875,
+    "num_tokens_generated": 180,
+    "steps": [
+      {
+        "step_num": 1,
+        "text": "To find the total number of meters James runs per week, we need to follow these steps:",
+        "entropy": {
+          "mean": 0.4040504055319616,
+          "max": 1.4694966077804565,
+          "min": 3.4978620533365756e-06,
+          "num_tokens": 10
+        },
+        "token_range": [
+          0,
+          10
+        ]
+      },
+      {
+        "step_num": 2,
+        "text": "Step 1: Find the total number of sprints per week\nJames runs 3 sprints per day, 3 times a week. To find the total number of sprints per week, we multiply the number of sprints per day by the number of",
+        "entropy": {
+          "mean": 0.41569677544440875,
+          "max": 2.1401681900024414,
+          "min": 1.825008325795352e-06,
+          "num_tokens": 57
+        },
+        "token_range": [
+          10,
+          67
+        ]
+      },
+      {
+        "step_num": 3,
+        "text": "Step 2: Find the total distance per sprint\nJames runs 60 meters per sprint.",
+        "entropy": {
+          "mean": 0.26029294058433744,
+          "max": 1.836874008178711,
+          "min": 2.4487508198944852e-05,
+          "num_tokens": 37
+        },
+        "token_range": [
+          67,
+          104
+        ]
+      },
+      {
+        "step_num": 4,
+        "text": "Step 3: Find the total distance per week\nTo find the total distance per week, we multiply the total number of sprints per week by the distance per sprint:\n9 sprints/week * 60 meters/sprint = 540 meter",
+        "entropy": {
+          "mean": 0.1450530824782546,
+          "max": 1.462997317314148,
+          "min": 8.421890015597455e-06,
+          "num_tokens": 76
+        },
+        "token_range": [
+          104,
+          180
+        ]
+      },
+      {
+        "step_num": 5,
+        "text": "Therefore, James runs a total of 540 meters per week.",
+        "entropy": {
+          "mean": 0.0,
+          "max": 0.0,
+          "min": 0.0,
+          "num_tokens": 0
+        },
+        "token_range": [
+          180,
+          180
+        ]
+      }
+    ],
+    "num_steps": 5
+  },
+  {
+    "id": "gsm8k_test_4",
+    "question": "Every day, Wendi feeds each of her chickens three cups of mixed chicken feed, containing seeds, mealworms and vegetables to help keep them healthy.  She gives the chickens their feed in three separate meals. In the morning, she gives her flock of chickens 15 cups of feed.  In the afternoon, she gives her chickens another 25 cups of feed.  How many cups of feed does she need to give her chickens in the final meal of the day if the size of Wendi's flock is 20 chickens?",
+    "expected_answer": "20",
+    "model_answer": "140",
+    "is_correct": false,
+    "inference_time": 401.97668504714966,
+    "generated_text": "To find out how many cups of feed Wendi needs to give her chickens in the final meal of the day, we need to calculate the total amount of feed she has already given and subtract that from the total amount of feed she gives in a day.\n\nStep 1: Calculate the total amount of feed Wendi gives in a day.\nShe gives 15 cups of feed in the morning and 25 cups of feed in the afternoon. \nTotal feed given in a day = 15 cups + 25 cups = 40 cups.\n\nStep 2: Calculate the total number of chickens in Wendi's flock.\nThe size of Wendi's flock is 20 chickens.\n\nStep 3: Calculate the amount of feed each chicken gets per meal.\nSince Wendi gives 3 cups of feed to each chicken in each meal, we can calculate the total amount of feed each chicken gets in a day by multiplying the number of chickens by the amount of feed per chicken per meal.\nFeed per chicken per meal = 3 cups\nTotal feed per chicken in a day = 3 cups * 3 meals = 9 cups\n\nStep 4: Calculate the total amount of feed Wendi needs for her flock in a day.\nTotal feed per chicken in a day = 9 cups\nTotal number of chickens = 20\nTotal feed needed for the flock in a day = 9 cups * 20 chickens = 180 cups\n\nStep 5: Calculate the amount of feed Wendi needs to give in the final meal of the day.\nTotal feed given in the morning and afternoon = 40 cups\nTotal feed needed for the flock in a day = 180 cups\nFeed needed for the final meal = Total feed needed for the flock in a day - Total feed given in the morning and afternoon\n= 180 cups - 40 cups\n= 140 cups\n\nTherefore, Wendi needs to give her chickens 140 cups of feed in the final meal of the day.",
+    "mean_entropy": 0.5376962837299469,
+    "total_entropy": 215.61620977570874,
+    "num_tokens_generated": 401,
+    "steps": [
+      {
+        "step_num": 1,
+        "text": "To find out how many cups of feed Wendi needs to give her chickens in the final meal of the day, we need to calculate the total amount of feed she has already given and subtract that from the total am",
+        "entropy": {
+          "mean": 0.5146729878574011,
+          "max": 2.335858106613159,
+          "min": 1.6642065020278096e-05,
+          "num_tokens": 42
+        },
+        "token_range": [
+          0,
+          42
+        ]
+      },
+      {
+        "step_num": 2,
+        "text": "Step 1: Calculate the total amount of feed Wendi gives in a day.\nShe gives 15 cups of feed in the morning and 25 cups of feed in the afternoon. \nTotal feed given in a day = 15 cups + 25 cups = 40 cups",
+        "entropy": {
+          "mean": 0.7663051509937903,
+          "max": 3.9636764526367188,
+          "min": 6.200078132678755e-06,
+          "num_tokens": 57
+        },
+        "token_range": [
+          42,
+          99
+        ]
+      },
+      {
+        "step_num": 3,
+        "text": "Step 2: Calculate the total number of chickens in Wendi's flock.\nThe size of Wendi's flock is 20 chickens.",
+        "entropy": {
+          "mean": 0.5718254684261735,
+          "max": 2.3421664237976074,
+          "min": 1.3131949344824534e-05,
+          "num_tokens": 28
+        },
+        "token_range": [
+          99,
+          127
+        ]
+      },
+      {
+        "step_num": 4,
+        "text": "Step 3: Calculate the amount of feed each chicken gets per meal.\nSince Wendi gives 3 cups of feed to each chicken in each meal, we can calculate the total amount of feed each chicken gets in a day by ",
+        "entropy": {
+          "mean": 0.7287136518836512,
+          "max": 3.0804390907287598,
+          "min": 8.565052121412009e-05,
+          "num_tokens": 91
+        },
+        "token_range": [
+          127,
+          218
+        ]
+      },
+      {
+        "step_num": 5,
+        "text": "Step 4: Calculate the total amount of feed Wendi needs for her flock in a day.\nTotal feed per chicken in a day = 9 cups\nTotal number of chickens = 20\nTotal feed needed for the flock in a day = 9 cups ",
+        "entropy": {
+          "mean": 0.5792630771283579,
+          "max": 2.105175733566284,
+          "min": 1.2391214113449678e-05,
+          "num_tokens": 62
+        },
+        "token_range": [
+          218,
+          280
+        ]
+      },
+      {
+        "step_num": 6,
+        "text": "Step 5: Calculate the amount of feed Wendi needs to give in the final meal of the day.\nTotal feed given in the morning and afternoon = 40 cups\nTotal feed needed for the flock in a day = 180 cups\nFeed ",
+        "entropy": {
+          "mean": 0.26514202032850026,
+          "max": 2.2326502799987793,
+          "min": 4.87600700580515e-05,
+          "num_tokens": 121
+        },
+        "token_range": [
+          280,
+          401
+        ]
+      },
+      {
+        "step_num": 7,
+        "text": "Therefore, Wendi needs to give her chickens 140 cups of feed in the final meal of the day.",
+        "entropy": {
+          "mean": 0.0,
+          "max": 0.0,
+          "min": 0.0,
+          "num_tokens": 0
+        },
+        "token_range": [
+          401,
+          401
+        ]
+      }
+    ],
+    "num_steps": 7
+  }
+]
