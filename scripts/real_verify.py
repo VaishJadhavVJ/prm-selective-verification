@@ -102,12 +102,16 @@ class MathShepherdPRM:
 # It works on any domain: math, finance, science, etc.
 
 class GeminiJudge:
-    def __init__(self, api_key):
-        """Initialize Gemini API."""
+    def __init__(self):
+        """Initialize Gemini via Vertex AI (uses GCP credits)."""
         from google import genai
-        self.client = genai.Client(api_key=api_key)
-        self.model_name = "gemini-2.0-flash"
-        print("Gemini Judge initialized!")
+        self.client = genai.Client(
+            vertexai=True,
+            project='macro-landing-490219-i0',
+            location='us-central1'
+        )
+        self.model_name = "gemini-2.5-flash-lite"
+        print("Gemini Judge initialized (Vertex AI)!")
     
     def score_steps(self, question, steps_text):
         """
@@ -183,7 +187,7 @@ Where score 1.0 means definitely correct and 0.0 means definitely wrong."""
                 is_correct = True
                 reason = f"API error: {str(e)}"
                 # Rate limiting - wait a bit
-                time.sleep(2)
+                time.sleep(5)
             
             scores.append({
                 "step_num": idx + 1,
@@ -194,7 +198,7 @@ Where score 1.0 means definitely correct and 0.0 means definitely wrong."""
             })
             
             # Small delay to avoid rate limiting
-            time.sleep(0.5)
+            time.sleep(5)
         
         return scores
 
@@ -327,11 +331,6 @@ def apply_verification_strategies(problem_result, verifier, verifier_name):
 def main():
     import sys
     
-    # Get Gemini API key
-    api_key = os.environ.get("GEMINI_API_KEY", "")
-    if not api_key:
-        api_key = input("Enter your Gemini API key: ").strip()
-    
     # Available entropy result files
     model_files = {
         'qwen-math-1.5b': 'results/qwen_math_1.5b_entropy.json',
@@ -370,7 +369,7 @@ def main():
     
     # Verifier 2: Gemini Judge
     print("\n--- Setting up Gemini Judge ---")
-    gemini = GeminiJudge(api_key)
+    gemini = GeminiJudge()
     
     # ---- Run verification on each problem ----
     all_results = []
