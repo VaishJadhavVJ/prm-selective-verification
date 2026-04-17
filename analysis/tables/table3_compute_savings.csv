@@ -1,0 +1,4 @@
+Model,Total_Steps,Low_Entropy,High_Entropy,Savings_Pct
+Qwen 1.5B,856,594,262,69.4
+Llama 3B,915,471,444,51.5
+Gemma 4B,975,562,413,57.6
