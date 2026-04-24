@@ -187,7 +187,7 @@ Where score 1.0 means definitely correct and 0.0 means definitely wrong."""
                 is_correct = True
                 reason = f"API error: {str(e)}"
                 # Rate limiting - wait a bit
-                time.sleep(5)
+                time.sleep(10)
             
             scores.append({
                 "step_num": idx + 1,
@@ -198,7 +198,7 @@ Where score 1.0 means definitely correct and 0.0 means definitely wrong."""
             })
             
             # Small delay to avoid rate limiting
-            time.sleep(5)
+            time.sleep(10)
         
         return scores
 
@@ -331,18 +331,34 @@ def apply_verification_strategies(problem_result, verifier, verifier_name):
 def main():
     import sys
     
+    # Parse arguments
+    dataset = "gsm8k"
+    model_key = "qwen-math-1.5b"
+    
+    i = 1
+    while i < len(sys.argv):
+        if sys.argv[i] == "--dataset":
+            if i + 1 < len(sys.argv):
+                dataset = sys.argv[i+1]
+                i += 2
+            else:
+                i += 1
+        else:
+            model_key = sys.argv[i]
+            i += 1
+    
+    suffix = "_options" if dataset == "options" else ""
+    
     # Available entropy result files
     model_files = {
-        'qwen-math-1.5b': 'results/qwen_math_1.5b_entropy.json',
-        'llama-3b': 'results/llama_3b_entropy.json',
-        'gemma3-4b': 'results/gemma3_4b_entropy.json'
+        'qwen-math-1.5b': f'results/qwen_math_1.5b{suffix}_entropy.json',
+        'llama-3b': f'results/llama_3b{suffix}_entropy.json',
+        'gemma3-4b': f'results/gemma3_4b{suffix}_entropy.json'
     }
-    
-    # Pick model to verify
-    model_key = sys.argv[1] if len(sys.argv) > 1 else 'qwen-math-1.5b'
     
     if model_key not in model_files:
         print(f"Available models: {', '.join(model_files.keys())}")
+        print(f"Usage: python3 scripts/real_verify.py [model] [--dataset gsm8k|options]")
         return
     
     results_path = model_files[model_key]
@@ -357,15 +373,19 @@ def main():
     
     # ---- Initialize verifiers ----
     
-    # Verifier 1: Math-Shepherd PRM
-    print("\n--- Setting up Math-Shepherd PRM ---")
-    try:
-        prm = MathShepherdPRM()
-        has_prm = True
-    except Exception as e:
-        print(f"Could not load PRM: {e}")
-        print("Will use Gemini only.")
-        has_prm = False
+    has_prm = False
+    if dataset == "options":
+        print("\n--- Skipping Math-Shepherd PRM (math-only) ---")
+    else:
+        # Verifier 1: Math-Shepherd PRM
+        print("\n--- Setting up Math-Shepherd PRM ---")
+        try:
+            prm = MathShepherdPRM()
+            has_prm = True
+        except Exception as e:
+            print(f"Could not load PRM: {e}")
+            print("Will use Gemini only.")
+            has_prm = False
     
     # Verifier 2: Gemini Judge
     print("\n--- Setting up Gemini Judge ---")
@@ -407,7 +427,8 @@ def main():
     
     # ---- Save results ----
     os.makedirs("results", exist_ok=True)
-    output_path = f"results/{model_key}_verification.json"
+    dataset_suffix = f"_{dataset}" if dataset != "gsm8k" else ""
+    output_path = f"results/{model_key}{dataset_suffix}_verification.json"
     with open(output_path, "w") as f:
         json.dump(all_results, f, indent=2)
     
