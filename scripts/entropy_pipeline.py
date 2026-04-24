@@ -276,7 +276,7 @@ def parse_steps_from_output(generated_text, tokens):
 # PART 4: FULL PIPELINE
 # ============================================================
 
-def run_entropy_pipeline(model_name, model, tokenizer, problems, output_dir="results"):
+def run_entropy_pipeline(model_name, model, tokenizer, problems, output_dir="results", dataset_name="gsm8k"):
     """
     Run the full entropy measurement pipeline on a set of problems.
     
@@ -370,7 +370,8 @@ def run_entropy_pipeline(model_name, model, tokenizer, problems, output_dir="res
         
         # Incremental save after each problem (crash protection)
         safe_name = model_name.replace("/", "_").replace("-", "_")
-        output_path = os.path.join(output_dir, f"{safe_name}_entropy.json")
+        dataset_suffix = f"_{dataset_name}" if dataset_name != "gsm8k" else ""
+        output_path = os.path.join(output_dir, f"{safe_name}{dataset_suffix}_entropy.json")
         summary_results = []
         for r in all_results:
             summary = {k: v for k, v in r.items() if k != 'token_entropies'}
@@ -380,8 +381,9 @@ def run_entropy_pipeline(model_name, model, tokenizer, problems, output_dir="res
     
     # Final save with full token entropies
     safe_name = model_name.replace("/", "_").replace("-", "_")
-    output_path = os.path.join(output_dir, f"{safe_name}_entropy.json")
-    full_output_path = os.path.join(output_dir, f"{safe_name}_entropy_full.json")
+    dataset_suffix = f"_{dataset_name}" if dataset_name != "gsm8k" else ""
+    output_path = os.path.join(output_dir, f"{safe_name}{dataset_suffix}_entropy.json")
+    full_output_path = os.path.join(output_dir, f"{safe_name}{dataset_suffix}_entropy_full.json")
     
     with open(full_output_path, "w") as f:
         json.dump(all_results, f, indent=2)
@@ -451,11 +453,22 @@ def main():
     import sys
     
     if len(sys.argv) < 2:
-        print("Usage: python entropy_pipeline.py <model_key> [num_problems]")
+        print("Usage: python entropy_pipeline.py <model_key> [num_problems] [--dataset gsm8k|options]")
         print(f"Available models: {', '.join(MODELS.keys())}")
         print("\nExample:")
         print("  python scripts/entropy_pipeline.py qwen-math-1.5b 10")
+        print("  python scripts/entropy_pipeline.py qwen-math-1.5b 44 --dataset options")
         return
+    
+    # Parse optional --dataset flag
+    dataset_name = "gsm8k"
+    if "--dataset" in sys.argv:
+        idx = sys.argv.index("--dataset")
+        if idx + 1 < len(sys.argv):
+            dataset_name = sys.argv[idx + 1]
+            # Remove --dataset and its value from sys.argv to avoid interfering with positional args
+            sys.argv.pop(idx)
+            sys.argv.pop(idx)
     
     model_key = sys.argv[1]
     num_problems = int(sys.argv[2]) if len(sys.argv) > 2 else 10
@@ -480,18 +493,36 @@ def main():
     )
     print("Model loaded!")
     
-    # Load GSM8K problems
-    with open("data/gsm8k/test.json") as f:
+    # Determine dataset path
+    if dataset_name == "options":
+        dataset_path = "data/options/options.json"
+    else:
+        dataset_path = "data/gsm8k/test.json"
+        
+    # Load and normalize problems
+    print(f"Loading dataset: {dataset_name} from {dataset_path}...")
+    with open(dataset_path) as f:
         all_problems = json.load(f)
+        
+    # Normalize keys (handle both lowercase and capital variants)
+    normalized_problems = []
+    for p in all_problems:
+        norm_p = {
+            "id": p.get("id") or p.get("ID") or f"prob_{len(normalized_problems)}",
+            "question": p.get("question") or p.get("Question"),
+            "final_answer": str(p.get("final_answer") or p.get("Answer") or ""),
+            "steps": p.get("steps") or p.get("Steps") or []
+        }
+        normalized_problems.append(norm_p)
     
-    problems = all_problems[:num_problems]
+    problems = normalized_problems[:num_problems]
     print(f"Running {len(problems)} problems...")
     
     # Run the pipeline
-    results = run_entropy_pipeline(model_key, model, tokenizer, problems)
+    results = run_entropy_pipeline(model_key, model, tokenizer, problems, dataset_name=dataset_name)
     
     print(f"\nDone! Push to GitHub:")
-    print(f"  git add . && git commit -m 'add {model_key} entropy results' && git push")
+    print(f"  git add . && git commit -m 'add {model_key} {dataset_name} entropy results' && git push")
 
 
 if __name__ == "__main__":
