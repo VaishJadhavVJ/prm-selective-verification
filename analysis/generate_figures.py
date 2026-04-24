@@ -71,6 +71,14 @@ def load_all_results(domain="gsm8k"):
 def build_problem_dataframe(all_data):
     """Build a pandas DataFrame with one row per problem."""
     rows = []
+    
+    # Load difficulty map from GSM8K source if available
+    difficulty_map = {}
+    if os.path.exists('data/gsm8k/test.json'):
+        with open('data/gsm8k/test.json') as f:
+            gsm_source = json.load(f)
+            difficulty_map = {p['id']: p.get('difficulty_level', 'unknown') for p in gsm_source}
+
     for model_name, problems in all_data.items():
         for p in problems:
             rows.append({
@@ -84,6 +92,7 @@ def build_problem_dataframe(all_data):
                 'num_steps': p.get('num_steps', 0),
                 'num_tokens': p.get('num_tokens_generated', 0),
                 'inference_time': p.get('inference_time', 0),
+                'difficulty': difficulty_map.get(p.get('id', ''), 'unknown'),
             })
     return pd.DataFrame(rows)
 
@@ -433,6 +442,46 @@ def fig9_options_entropy_vs_correctness(df):
 
 
 # ============================================================
+# FIGURE 10: Entropy Gap by Problem Difficulty
+# ============================================================
+def fig10_entropy_gap_by_difficulty(df):
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    models = ['Qwen 1.5B', 'Llama 3B', 'Gemma 4B']
+    difficulties = ['easy', 'medium', 'hard']
+    colors = [COLORS['qwen'], COLORS['llama'], COLORS['gemma']]
+    
+    x = np.arange(len(difficulties))
+    width = 0.25
+    
+    for i, (model, color) in enumerate(zip(models, colors)):
+        gaps = []
+        for diff in difficulties:
+            subset = df[(df['model'] == model) & (df['difficulty'] == diff)]
+            c = subset[subset['correct'] == True]['mean_entropy']
+            w = subset[subset['correct'] == False]['mean_entropy']
+            
+            if not c.empty and not w.empty:
+                gaps.append(w.mean() - c.mean())
+            else:
+                gaps.append(0)
+        
+        ax.bar(x + i * width, gaps, width, label=model, color=color, edgecolor='white')
+    
+    ax.set_ylabel('Entropy Gap (Wrong - Correct)')
+    ax.set_title('Entropy Gap by Problem Difficulty')
+    ax.set_xticks(x + width)
+    ax.set_xticklabels([d.capitalize() for d in difficulties])
+    ax.legend()
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    
+    plt.savefig('analysis/figures/fig10_entropy_gap_by_difficulty.png')
+    plt.close()
+    print("  Saved: fig10_entropy_gap_by_difficulty.png")
+
+
+# ============================================================
 # TABLES
 # ============================================================
 def generate_tables(df, step_df):
@@ -520,6 +569,7 @@ def main():
     fig7_confidently_wrong(df)
     fig8_cross_domain_accuracy(df, opt_df)
     fig9_options_entropy_vs_correctness(opt_df)
+    fig10_entropy_gap_by_difficulty(df)
     
     print("\nGenerating tables...")
     generate_tables(df, step_df)
