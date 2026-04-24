@@ -345,8 +345,15 @@ def run_entropy_pipeline(model_name, model, tokenizer, problems, output_dir="res
             numbers = re.findall(r'[\d,]+\.?\d*', gen_result['generated_text'])
             model_answer = numbers[-1].replace(",", "") if numbers else "unknown"
         
-        expected = problem.get('final_answer', '').replace(",", "").strip()
-        is_correct = model_answer == expected
+        # Numeric comparison with 0.01 tolerance
+        try:
+            # Strip trailing periods and whitespace before float conversion
+            m_val = float(model_answer.strip().rstrip('.'))
+            e_val = float(expected.strip().rstrip('.'))
+            is_correct = abs(m_val - e_val) < 0.01
+        except (ValueError, TypeError):
+            # Fall back to string comparison (stripping trailing period)
+            is_correct = model_answer.strip().rstrip('.') == expected.strip().rstrip('.')
         
         print(f"  Answer: {model_answer} (expected: {expected}) {'CORRECT' if is_correct else 'WRONG'}")
         

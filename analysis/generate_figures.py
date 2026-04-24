@@ -51,12 +51,13 @@ os.makedirs('analysis/figures', exist_ok=True)
 os.makedirs('analysis/tables', exist_ok=True)
 
 
-def load_all_results():
-    """Load all entropy results into a structured format."""
+def load_all_results(domain="gsm8k"):
+    """Load all entropy results for a specific domain."""
+    suffix = "_options" if domain == "options" else ""
     files = {
-        'Qwen 1.5B': 'results/qwen_math_1.5b_entropy.json',
-        'Llama 3B': 'results/llama_3b_entropy.json',
-        'Gemma 4B': 'results/gemma3_4b_entropy.json'
+        'Qwen 1.5B': f'results/qwen_math_1.5b{suffix}_entropy.json',
+        'Llama 3B': f'results/llama_3b{suffix}_entropy.json',
+        'Gemma 4B': f'results/gemma3_4b{suffix}_entropy.json'
     }
     
     all_data = {}
@@ -352,6 +353,86 @@ def fig7_confidently_wrong(df):
 
 
 # ============================================================
+# FIGURE 8: Cross-Domain Accuracy Comparison
+# ============================================================
+def fig8_cross_domain_accuracy(gsm_df, opt_df):
+    fig, ax = plt.subplots(figsize=(9, 5))
+    
+    models = ['Qwen 1.5B', 'Llama 3B', 'Gemma 4B']
+    x = np.arange(len(models))
+    width = 0.35
+    
+    gsm_acc = gsm_df.groupby('model')['correct'].mean().reindex(models) * 100
+    opt_acc = opt_df.groupby('model')['correct'].mean().reindex(models) * 100
+    
+    ax.bar(x - width/2, gsm_acc, width, label='GSM8K (Math)', color='#90CAF9', edgecolor='white')
+    ax.bar(x + width/2, opt_acc, width, label='Options (Trading)', color='#F48FB1', edgecolor='white')
+    
+    # Add values on top
+    for i, v in enumerate(gsm_acc):
+        ax.text(i - width/2, v + 1, f'{v:.1f}%', ha='center', va='bottom', fontsize=10)
+    for i, v in enumerate(opt_acc):
+        ax.text(i + width/2, v + 1, f'{v:.1f}%', ha='center', va='bottom', fontsize=10)
+    
+    ax.set_ylabel('Accuracy (%)')
+    ax.set_title('Cross-Domain Generalization: GSM8K vs. Options Trading')
+    ax.set_xticks(x)
+    ax.set_xticklabels(models)
+    ax.set_ylim(0, 100)
+    ax.legend()
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    
+    plt.savefig('analysis/figures/fig8_cross_domain_accuracy.png')
+    plt.close()
+    print("  Saved: fig8_cross_domain_accuracy.png")
+
+
+# ============================================================
+# FIGURE 9: Options Entropy vs Correctness
+# ============================================================
+def fig9_options_entropy_vs_correctness(df):
+    fig, ax = plt.subplots(figsize=(9, 5))
+    
+    models = ['Qwen 1.5B', 'Llama 3B', 'Gemma 4B']
+    x = np.arange(len(models))
+    width = 0.35
+    
+    correct_means = []
+    wrong_means = []
+    correct_stds = []
+    wrong_stds = []
+    
+    for m in models:
+        model_df = df[df['model'] == m]
+        c = model_df[model_df['correct'] == True]['mean_entropy']
+        w = model_df[model_df['correct'] == False]['mean_entropy']
+        correct_means.append(c.mean() if not c.empty else 0)
+        wrong_means.append(w.mean() if not w.empty else 0)
+        correct_stds.append(c.std() if not c.empty else 0)
+        wrong_stds.append(w.std() if not w.empty else 0)
+    
+    ax.bar(x - width/2, correct_means, width, yerr=correct_stds,
+           label='Correct', color=COLORS['correct'], alpha=0.85,
+           capsize=5, edgecolor='white')
+    ax.bar(x + width/2, wrong_means, width, yerr=wrong_stds,
+           label='Wrong', color=COLORS['wrong'], alpha=0.85,
+           capsize=5, edgecolor='white')
+    
+    ax.set_ylabel('Mean Entropy (bits)')
+    ax.set_title('Options Trading: Entropy of Correct vs Wrong Answers')
+    ax.set_xticks(x)
+    ax.set_xticklabels(models)
+    ax.legend()
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    
+    plt.savefig('analysis/figures/fig9_options_entropy_vs_correctness.png')
+    plt.close()
+    print("  Saved: fig9_options_entropy_vs_correctness.png")
+
+
+# ============================================================
 # TABLES
 # ============================================================
 def generate_tables(df, step_df):
@@ -411,15 +492,23 @@ def main():
     print("\nGenerating professional analysis figures and tables...")
     print("=" * 60)
     
-    all_data = load_all_results()
-    if not all_data:
+    # Load both datasets
+    gsm_data = load_all_results(domain="gsm8k")
+    opt_data = load_all_results(domain="options")
+    
+    if not gsm_data:
         print("No results found. Run entropy_pipeline.py first.")
         return
     
-    df = build_problem_dataframe(all_data)
-    step_df = build_step_dataframe(all_data)
+    # Build dataframes
+    df = build_problem_dataframe(gsm_data)
+    step_df = build_step_dataframe(gsm_data)
     
-    print(f"\nLoaded: {len(df)} problems, {len(step_df)} steps across {df['model'].nunique()} models")
+    opt_df = build_problem_dataframe(opt_data)
+    opt_step_df = build_step_dataframe(opt_data)
+    
+    print(f"\nGSM8K:  {len(df)} problems, {len(step_df)} steps")
+    print(f"Options: {len(opt_df)} problems, {len(opt_step_df)} steps")
     
     print("\nGenerating figures...")
     fig1_accuracy_comparison(df)
@@ -429,6 +518,8 @@ def main():
     fig5_entropy_by_step_position(step_df)
     fig6_entropy_vs_steps(df)
     fig7_confidently_wrong(df)
+    fig8_cross_domain_accuracy(df, opt_df)
+    fig9_options_entropy_vs_correctness(opt_df)
     
     print("\nGenerating tables...")
     generate_tables(df, step_df)

@@ -117,7 +117,7 @@
     "question": "A rectangular garden has a length of 25 meters and a width of 15 meters. A fence is to be built around the garden. The cost of fencing is $12 per meter. Additionally, a gate of 3 meters wide will be installed, and this section does not require fencing. What is the total cost of the fence?",
     "expected_answer": "924",
     "model_answer": "924.",
-    "is_correct": false,
+    "is_correct": true,
     "inference_time": 23.61815595626831,
     "generated_text": "Okay, let's break down this problem step by step:\n\n**1. Calculate the perimeter of the garden:**\n\n* The perimeter of a rectangle is found using the formula: Perimeter = 2 * (length + width)\n* In this case, length = 25 meters and width = 15 meters.\n* Perimeter = 2 * (25 + 15) = 2 * 40 = 80 meters\n\n**2. Account for the gate:**\n\n* The gate is 3 meters wide, and it doesn't need fencing.\n* So, we subtract the gate width from the total perimeter: 80 meters - 3 meters = 77 meters\n\n**3. Calculate the total cost of the fence:**\n\n* The cost of fencing is $12 per meter.\n* We need to fence 77 meters.\n* Total cost = 77 meters * $12/meter = $924\n\n**Answer:** The total cost of the fence is $924.\n",
     "mean_entropy": 0.14618004914627272,

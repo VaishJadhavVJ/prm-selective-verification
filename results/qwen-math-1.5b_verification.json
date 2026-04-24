@@ -341,7 +341,8 @@
         "mean_score": 1.0,
         "flagged_steps": []
       }
-    }
+    },
+    "is_correct": true
   },
   {
     "problem_id": "gsm8k_test_1",
@@ -604,7 +605,8 @@
           1
         ]
       }
-    }
+    },
+    "is_correct": true
   },
   {
     "problem_id": "gsm8k_test_2",
@@ -938,7 +940,8 @@
         "mean_score": 0.875,
         "flagged_steps": []
       }
-    }
+    },
+    "is_correct": true
   },
   {
     "problem_id": "gsm8k_test_3",
@@ -1197,7 +1200,8 @@
         "mean_score": 0.75,
         "flagged_steps": []
       }
-    }
+    },
+    "is_correct": true
   },
   {
     "problem_id": "gsm8k_test_4",
@@ -1461,6 +1465,7 @@
           3
         ]
       }
-    }
+    },
+    "is_correct": true
   }
 ]
