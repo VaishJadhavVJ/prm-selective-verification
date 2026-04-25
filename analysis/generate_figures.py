@@ -68,6 +68,32 @@ def load_all_results(domain="gsm8k"):
     return all_data
 
 
+def load_verification_results(domain="gsm8k"):
+    """Load real verification results for compute savings calculation."""
+    suffix = "_options" if domain == "options" else ""
+    files = {
+        'Qwen 1.5B': f'results/qwen-math-1.5b{suffix}_verification.json',
+        'Llama 3B': f'results/llama-3b{suffix}_verification.json',
+        'Gemma 4B': f'results/gemma3-4b{suffix}_verification.json'
+    }
+    
+    savings = {}
+    for name, path in files.items():
+        if os.path.exists(path):
+            with open(path) as f:
+                data = json.load(f)
+                full_v = 0
+                entropy_v = 0
+                for d in data:
+                    v_key = 'gemini' if 'gemini' in d else 'prm'
+                    if v_key in d:
+                        full_v += d[v_key].get('full', {}).get('num_verified', 0)
+                        entropy_v += d[v_key].get('entropy_based', {}).get('num_verified', 0)
+                if full_v > 0:
+                    savings[name] = (1 - entropy_v / full_v) * 100
+    return savings
+
+
 def build_problem_dataframe(all_data):
     """Build a pandas DataFrame with one row per problem."""
     rows = []
@@ -482,6 +508,42 @@ def fig10_entropy_gap_by_difficulty(df):
 
 
 # ============================================================
+# FIGURE 11: Compute Savings (Real)
+# ============================================================
+def fig11_compute_savings_comparison(gsm_savings, opt_savings):
+    fig, ax = plt.subplots(figsize=(9, 5))
+    
+    models = ['Qwen 1.5B', 'Llama 3B', 'Gemma 4B']
+    x = np.arange(len(models))
+    width = 0.35
+    
+    gsm_vals = [gsm_savings.get(m, 0) for m in models]
+    opt_vals = [opt_savings.get(m, 0) for m in models]
+    
+    ax.bar(x - width/2, gsm_vals, width, label='GSM8K (Math)', color='#90CAF9', edgecolor='white')
+    ax.bar(x + width/2, opt_vals, width, label='Options (Trading)', color='#F48FB1', edgecolor='white')
+    
+    # Add values
+    for i, v in enumerate(gsm_vals):
+        ax.text(i - width/2, v + 1, f'{v:.1f}%', ha='center', va='bottom', fontsize=10)
+    for i, v in enumerate(opt_vals):
+        ax.text(i + width/2, v + 1, f'{v:.1f}%', ha='center', va='bottom', fontsize=10)
+        
+    ax.set_ylabel('Steps Saved (%)')
+    ax.set_title('Compute Savings via Entropy-Based Verification')
+    ax.set_xticks(x)
+    ax.set_xticklabels(models)
+    ax.set_ylim(0, 100)
+    ax.legend()
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    
+    plt.savefig('analysis/figures/fig11_compute_savings.png')
+    plt.close()
+    print("  Saved: fig11_compute_savings.png")
+
+
+# ============================================================
 # TABLES
 # ============================================================
 def generate_tables(df, step_df):
@@ -545,6 +607,10 @@ def main():
     gsm_data = load_all_results(domain="gsm8k")
     opt_data = load_all_results(domain="options")
     
+    # Load verification results for Fig 11
+    gsm_savings = load_verification_results(domain="gsm8k")
+    opt_savings = load_verification_results(domain="options")
+    
     if not gsm_data:
         print("No results found. Run entropy_pipeline.py first.")
         return
@@ -570,6 +636,7 @@ def main():
     fig8_cross_domain_accuracy(df, opt_df)
     fig9_options_entropy_vs_correctness(opt_df)
     fig10_entropy_gap_by_difficulty(df)
+    fig11_compute_savings_comparison(gsm_savings, opt_savings)
     
     print("\nGenerating tables...")
     generate_tables(df, step_df)
