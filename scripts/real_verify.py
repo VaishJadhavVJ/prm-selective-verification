@@ -187,7 +187,7 @@ Where score 1.0 means definitely correct and 0.0 means definitely wrong."""
                 is_correct = True
                 reason = f"API error: {str(e)}"
                 # Rate limiting - wait a bit
-                time.sleep(10)
+                time.sleep(15)
             
             scores.append({
                 "step_num": idx + 1,
@@ -198,7 +198,7 @@ Where score 1.0 means definitely correct and 0.0 means definitely wrong."""
             })
             
             # Small delay to avoid rate limiting
-            time.sleep(10)
+            time.sleep(15)
         
         return scores
 
